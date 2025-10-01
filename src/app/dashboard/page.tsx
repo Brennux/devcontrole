@@ -16,7 +16,7 @@ export default async function dashboard() {
             <main className="mt-9 mb-2">
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-bold">Chamados</h1>
-                    <Link href="/dashboard/create" className="bg-blue-500 px-4 py-2 rounded text-white">
+                    <Link href="/dashboard/new" className="bg-blue-500 px-4 py-2 rounded text-white">
                         Abrir Chamado
                     </Link>
                 </div>
