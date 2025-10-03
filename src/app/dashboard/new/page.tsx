@@ -19,6 +19,30 @@ export default async function NewTicket() {
         }
     })
 
+    async function handleRegisterTicket(formData: FormData) { // passando async para component que não é client 
+        'use server'
+
+        const name = formData.get("name")
+        const description = formData.get("description")
+        const customerId = formData.get("customer")
+
+        if (!name || !description || !customerId) {
+            return;
+        }
+
+        await prismaClient.ticket.create({
+            data: {
+                name: name as string,
+                description: description as string,
+                customerId: customerId as string,
+                status: "ABERTO",
+                userId: session?.user.id
+            }
+        })
+
+        redirect("/dashboard")
+    }
+
     return (
         <Container>
             <main className="mt-9 mb-2">
@@ -29,7 +53,9 @@ export default async function NewTicket() {
                     <h1 className="text-3xl font-bold">Novo chamado</h1>
                 </div>
 
-                <form className="flex flex-col mt-6">
+
+
+                <form className="flex flex-col mt-6" action={handleRegisterTicket}>
                     <label className="mb-1 font-medium text-lg">Nome do chamado</label>
                     <input
                         className="w-full border-2 rounded-md px-2 mb-2 h-11"
