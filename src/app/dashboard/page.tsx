@@ -20,6 +20,9 @@ export default async function dashboard() {
         },
         include: {
             customer: true
+        },
+        orderBy: {
+            created_at: "desc"
         }
     })
 
@@ -45,11 +48,15 @@ export default async function dashboard() {
                     </thead>
 
                     <tbody>
-                      { tickets.map(ticket => (
-                        <TicketItem key={ticket.id} ticket={ticket} customer={ticket.customer} />
-                      )) }
+                        {tickets.map(ticket => (
+                            <TicketItem key={ticket.id} ticket={ticket} customer={ticket.customer} />
+                        ))}
                     </tbody>
                 </table>
+
+                {tickets.length === 0 && (
+                    <h1 className="px-2 md:0 text-gray-600">Nenhum ticket encontrado</h1>
+                )}
             </main>
         </Container>
     )

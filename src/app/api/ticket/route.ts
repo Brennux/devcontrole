@@ -20,6 +20,24 @@ export async function PATCH(request: Request) {
         }
     })
 
-    return NextResponse.json({ message: "teste chamada" })
+    if(!findTicket){
+        return NextResponse.json({ message: "failed to update Ticket", status: 400 })
+    }
+
+    try{
+        await prismaClient.ticket.update({
+            where:{
+                id: id as string
+            },
+            data:{
+                status: "FECHADO"
+            }
+        })
+
+        return NextResponse.json({ message: "Ticket updated successfully", status: 200 })
+
+    } catch (error) {
+        return NextResponse.json({ message: "Failed to update Ticket", status: 400 })
+    }
 
 }
