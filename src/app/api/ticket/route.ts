@@ -20,16 +20,16 @@ export async function PATCH(request: Request) {
         }
     })
 
-    if(!findTicket){
+    if (!findTicket) {
         return NextResponse.json({ message: "failed to update Ticket", status: 400 })
     }
 
-    try{
+    try {
         await prismaClient.ticket.update({
-            where:{
+            where: {
                 id: id as string
             },
-            data:{
+            data: {
                 status: "FECHADO"
             }
         })
@@ -40,4 +40,27 @@ export async function PATCH(request: Request) {
         return NextResponse.json({ message: "Failed to update Ticket", status: 400 })
     }
 
+}
+
+export async function POST(request: Request) {
+    const { customerId, name, description } = await request.json()
+
+    if (!customerId || !name || !description) {
+        return NextResponse.json({ error: "All fields are required" }, { status: 400 })
+    }
+
+    try {
+        await prismaClient.ticket.create({
+            data: {
+                name: name,
+                description: description,
+                status: "ABERTO",
+                customerId: customerId
+            }
+        })
+
+        return NextResponse.json({ message: "Ticket created successfully" })
+    } catch (error) {
+        return NextResponse.json({ error: "Failed to create ticket" }, { status: 400 })
+    }
 }

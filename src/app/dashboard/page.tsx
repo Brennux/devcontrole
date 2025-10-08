@@ -5,6 +5,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { TicketItem } from "./components/header/ticket"
 import prismaClient from "@/lib/prisma"
+import { Button } from "./components/header/button"
 
 export default async function dashboard() {
     const session = await getServerSession(authOptions)
@@ -15,8 +16,10 @@ export default async function dashboard() {
 
     const tickets = await prismaClient.ticket.findMany({
         where: {
-            userId: session.user.id,
-            status: "ABERTO"
+            status: "ABERTO",
+            customer: {
+                userId: session.user.id
+            }
         },
         include: {
             customer: true
@@ -31,9 +34,12 @@ export default async function dashboard() {
             <main className="mt-9 mb-2">
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-bold">Chamados</h1>
-                    <Link href="/dashboard/new" className="bg-blue-500 px-4 py-2 rounded text-white">
+              <div className="flex gap-2 items-center">
+                <Button />
+                    <Link href="/dashboard/new" className="bg-blue-500 px-4 py-1 rounded text-white">
                         Abrir Chamado
                     </Link>
+              </div>
                 </div>
 
 

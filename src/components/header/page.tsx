@@ -34,19 +34,19 @@ export function Header() {
 
                 {status === "unauthenticated" && (
                     <button onClick={handleLogin}>
-                        <FiLock size={26} color="#4b5563" />
+                        <FiLock size={26} color="#4b5563" className="hover:scale-110 transition-transform duration-200 " />
                     </button>
                 )}
                 {status === "authenticated" && (
 
                     <div className="flex items-baseline gap-4">
-                        <Link href="/dashboard">
+                        <Link href="/dashboard" className="hover:underline transition-transform duration-200">
                             <FiUser size={26} color="#4b5563" />
                         </Link>
 
 
                         <button onClick={handleLogout}>
-                            <FiLogOut size={26} color="#4b5563" />
+                            <FiLogOut size={26} color="#4b5563" className="hover:scale-110 transition-transform duration-200" />
                         </button>
                     </div>
                 )}

@@ -2,6 +2,31 @@ import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server'
 import prismaClient from '@/lib/prisma';
+import { ca } from 'zod/locales';
+
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const customerEmail = searchParams.get('email');
+
+    if (!customerEmail || customerEmail === '') {
+        return NextResponse.json({ error: 'Email is required' }, { status: 400 })
+    }
+
+    try {
+        const customer = await prismaClient.customer.findFirst({
+            where: {
+                email: customerEmail
+            }
+        })
+
+        return NextResponse.json(customer)
+        
+    } catch (error) {
+        return NextResponse.json({ message: 'Recebido' })
+    }
+
+    return NextResponse.json({ message: 'Recebido' })
+}
 
 export async function DELETE(request: Request) {
     const session = await getServerSession(authOptions)

@@ -30,7 +30,7 @@ export function Modal() {
                     <div className="p-6 space-y-6">
                         <div className="bg-gray-50 p-4 rounded-lg">
                             <div className="flex items-center">
-                                <h2 className="text-sm font-semibold text-gray-600 uppercase tracking-wide w-28 flex-shrink-0">Cliente:</h2>
+                                <h2 className="text-sm font-semibold text-gray-600 uppercase tracking-wide w-28 flex-shrink-0">Nome:</h2>
                                 <p className="text-gray-800 font-medium">{ticket?.customer?.name}</p>
                             </div>
                         </div>
